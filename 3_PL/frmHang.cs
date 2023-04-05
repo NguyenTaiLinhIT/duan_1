@@ -15,7 +15,7 @@ namespace _3_PL
         public frmHang()
         {
             InitializeComponent();
-            I
+            
         }
     }
 }

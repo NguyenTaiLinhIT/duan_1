@@ -8,23 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DỰ_ÁN_1_NHÓM_2
+namespace _3_PL
 {
-    public partial class Form1 : Form
+    public partial class frmQUANLYKM : Form
     {
-        public Form1()
+        public frmQUANLYKM()
         {
             InitializeComponent();
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

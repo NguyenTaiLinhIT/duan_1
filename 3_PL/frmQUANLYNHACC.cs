@@ -8,18 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DỰ_ÁN_1_NHÓM_2
+namespace _3_PL
 {
-    public partial class QUẢN_LÝ_NHÀ_CUNG_CẤP : Form
+    public partial class frmQUANLYNHACC : Form
     {
-        public QUẢN_LÝ_NHÀ_CUNG_CẤP()
+        public frmQUANLYNHACC()
         {
             InitializeComponent();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
