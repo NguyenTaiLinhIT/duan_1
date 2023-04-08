@@ -347,5 +347,10 @@ namespace _3_PL
             //   // LoadNhanVien();
             //}
         }
+
+        private void frmNhanVien_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

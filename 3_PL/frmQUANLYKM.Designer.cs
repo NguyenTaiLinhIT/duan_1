@@ -365,6 +365,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "frmQUANLYKM";
             this.Text = "frmQUANLYKM";
+            this.Load += new System.EventHandler(this.frmQUANLYKM_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
