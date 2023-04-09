@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _1_DAL.IRepository
 {
-    public interface lKMaiDTRepository
+    public interface IKMaiDTRepository
     {
         bool Add(Promotion khuyenmai);
         bool Update(Promotion khuyenmai);

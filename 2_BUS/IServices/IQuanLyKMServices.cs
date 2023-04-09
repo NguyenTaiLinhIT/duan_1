@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace _2_BUS.IServices
 {
     public interface IQuanLyKMServices
-    {
-        bool Add(Promotion obj);
-        bool Update(Promotion obj);
-        bool Delete(Promotion obj);
+    {    
+        bool Add(Promotion promotion);
+        bool Update(Promotion promotion);
+        bool Delete(Promotion promotion);
         List<Promotion> GetAll();
     }
 }

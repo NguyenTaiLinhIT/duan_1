@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace _1_DAL.Repository
 {
-    public class KhuyenmaiDTRepository : lKMaiDTRepository
+    public class KhuyenmaiDTRepository : IKMaiDTRepository
     {
         QuanLyDatabaseContext _dbContext = new QuanLyDatabaseContext();
         public bool Add(Promotion Promotion)

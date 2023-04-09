@@ -33,6 +33,11 @@ namespace _1_DAL.Repository
             return _dbContext.Employees.ToList();
         }
 
+        public Promotion GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Update(Employee employee)
         {
             _dbContext.Update(employee);

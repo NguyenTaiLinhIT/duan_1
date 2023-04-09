@@ -12,7 +12,7 @@ namespace _2_BUS.Services
 {
     public class QlkhuyenmaiServices : IQuanLyKMServices
     {
-        private KhuyenmaiDTRepository _khuyenmai = new KhuyenmaiDTRepository();
+        private IKMaiDTRepository _khuyenmai = new KhuyenmaiDTRepository();
         public bool Add(Promotion obj)
         {
             _khuyenmai.Add(obj);

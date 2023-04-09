@@ -13,5 +13,6 @@ namespace _1_DAL.IRepository
         bool Update(Employee nhanVien);
         bool Delete(Employee nhanVien);
         List<Employee> GetAll();
+        Promotion GetById(int id);
     }
 }

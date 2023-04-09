@@ -36,5 +36,6 @@ namespace _2_BUS.Services
             _inhanvienrepository.Update(obj);
             return true;
         }
+     
     }
 }
