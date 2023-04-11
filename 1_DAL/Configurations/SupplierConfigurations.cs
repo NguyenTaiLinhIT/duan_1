@@ -19,6 +19,11 @@ namespace _1_DAL.Configurations
             builder.Property(x => x.HinhAnh)
           .HasColumnType("varbinary(MAX)")
           .IsRequired();
+            builder.Property(x => x.DiaChi).HasColumnType("nchar(50)").IsRequired(); // Thêm thuộc tính cho cột DiaChi
+            builder.Property(x => x.DienThoai).HasColumnType("nchar(12)").IsRequired(); // Thêm thuộc tính cho cột DienThoai
+            builder.Property(x => x.Email).HasColumnType("nchar(50)").IsRequired(); // Thêm thuộc tính cho cột Email
+            builder.Property(x => x.Website).HasColumnType("nchar(30)"); // Thêm thuộc tính cho cột Website
+            builder.Property(x => x.GhiChu).HasColumnType("nchar(250)"); // Thêm thuộc tính cho cột GhiChu
         }
     }
 }
