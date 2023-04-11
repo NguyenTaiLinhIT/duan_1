@@ -10,6 +10,7 @@ namespace _1_DAL.Entities
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public byte[] HinhAnh { get; set; }
         public virtual List<SupplierDetail> SupplierDetails { get; set; }
     }
 }

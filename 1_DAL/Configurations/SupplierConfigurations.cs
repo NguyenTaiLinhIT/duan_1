@@ -16,6 +16,9 @@ namespace _1_DAL.Configurations
             builder.ToTable("Supplier");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).HasColumnType("nvarchar(200)").IsRequired();
+            builder.Property(x => x.HinhAnh)
+          .HasColumnType("varbinary(MAX)")
+          .IsRequired();
         }
     }
 }

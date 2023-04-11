@@ -31,7 +31,7 @@ namespace _3_PL
      public void load()
         {
             _quanlykm.GetAll();
-            dataGridView1.DataSource = _quanlykm.GetAll();
+            dtgv.DataSource = _quanlykm.GetAll();
         }
 
         private void frmQUANLYKM_Load(object sender, EventArgs e)
@@ -53,31 +53,74 @@ namespace _3_PL
         private void button3_Click(object sender, EventArgs e)
         {
             Promotion km = new Promotion();
-            km.Name= textBox2.Text;
-            km.CreateDate = dateTimePicker1.Value;
-            km.EndDate = dateTimePicker2.Value;
-            km.Index = int.Parse( textBox5.Text);
-            _quanlykm.Add(km);
-            MessageBox.Show("THEM THANH CONG");
+
+            if (string.IsNullOrWhiteSpace(tbTenKM.Text))
+            {
+                MessageBox.Show("Bạn chưa nhập tên khuyến mãi, xin hãy nhập");
+                tbTenKM.BackColor = Color.Red;
+                return;
+            }
+            else
+            {
+                tbTenKM.BackColor = Color.White;
+                km.Name = tbTenKM.Text;
+            }
+
+            if (dtngaybatdau.Value >= dtngaykethuc.Value)
+            {
+                MessageBox.Show("Ngày bắt đầu phải trước ngày kết thúc, xin hãy chọn lại");
+                dtngaybatdau.BackColor = Color.Red;
+                dtngaykethuc.BackColor = Color.Red;
+                return;
+            }
+            else
+            {
+                dtngaybatdau.BackColor = Color.White;
+                dtngaykethuc.BackColor = Color.White;
+                km.CreateDate = dtngaybatdau.Value;
+                km.EndDate = dtngaykethuc.Value;
+            }
+
+            if (string.IsNullOrWhiteSpace(tbptKM.Text))
+            {
+                MessageBox.Show("Bạn chưa nhập % khuyến mãi, xin hãy nhập");
+                tbptKM.BackColor = Color.Red;
+                return;
+            }
+            else if (!int.TryParse(tbptKM.Text, out int index))
+            {
+                MessageBox.Show("Bạn không thể nhập chữ vào % khuyến mãi, xin hãy nhập số");
+                tbptKM.BackColor = Color.Red;
+                return;
+            }
+            else
+            {
+                tbptKM.BackColor = Color.White;
+                km.Index = index;
+                _quanlykm.Add(km);
+                MessageBox.Show("Thêm thành công");
+            }
+
             load();
-            textBox2.Text = "";
-            textBox5.Text = ""; 
+            tbTenKM.Text = "";
+            tbptKM.Text = "";
+
         }
 
-            private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
             {
-            if (dataGridView1.CurrentCell != null)
+            if (dtgv.CurrentCell != null)
             {
                 var kmList = _quanlykm.GetAll();
-                var row = dataGridView1.CurrentCell.RowIndex;
+                var row = dtgv.CurrentCell.RowIndex;
                 if (row >= 0 && row < kmList.Count)
                 {
                     var km = kmList[row];
-                    textBox1.Text = km.Id.ToString();
-                    textBox2.Text = km.Name.ToString();
-                    textBox5.Text = km.Index.ToString();
-                    dateTimePicker1.Value = km.CreateDate;
-                    dateTimePicker2.Value = km.EndDate;
+                    tbidKM.Text = km.Id.ToString();
+                    tbTenKM.Text = km.Name.ToString();
+                    tbptKM.Text = km.Index.ToString();
+                    dtngaybatdau.Value = km.CreateDate;
+                    dtngaykethuc.Value = km.EndDate;
                 }
                 else
                 {
@@ -91,19 +134,34 @@ namespace _3_PL
         private void button2_Click(object sender, EventArgs e)
         {
             var kmList = _quanlykm.GetAll();
-            if (dataGridView1.CurrentCell != null)
+            if (dtgv.CurrentCell != null)
             {
-                var row = dataGridView1.CurrentCell.RowIndex;
+                var row = dtgv.CurrentCell.RowIndex;
                 if (row >= 0 && row < kmList.Count)
                 {
                     var km = kmList[row];
-                    km.Name = textBox2.Text;
-                    km.CreateDate = dateTimePicker1.Value;
-                    km.EndDate = dateTimePicker2.Value;
-                    km.Index = int.Parse(textBox5.Text);
-                    _quanlykm.Update(km);
-                    MessageBox.Show("Cập nhật thông tin khuyến mãi thành công!");
-                    load();
+                    if (string.IsNullOrWhiteSpace(tbTenKM.Text))
+                    {
+                        MessageBox.Show("Vui lòng nhập tên khuyến mãi!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else if (dtngaybatdau.Value >= dtngaykethuc.Value)
+                    {
+                        MessageBox.Show("Ngày bắt đầu không được lớn hơn hoặc bằng ngày kết thúc!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else if (string.IsNullOrWhiteSpace(tbptKM.Text) || !int.TryParse(tbptKM.Text, out int index))
+                    {
+                        MessageBox.Show("Vui lòng nhập phần trăm khuyến mãi là một số nguyên!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        km.Name = tbTenKM.Text;
+                        km.CreateDate = dtngaybatdau.Value;
+                        km.EndDate = dtngaykethuc.Value;
+                        km.Index = index;
+                        _quanlykm.Update(km);
+                        MessageBox.Show("Cập nhật thông tin khuyến mãi thành công!");
+                        load();
+                    }
                 }
                 else
                 {
@@ -115,10 +173,10 @@ namespace _3_PL
 
         private void button7_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.CurrentCell != null)
+            if (dtgv.CurrentCell != null)
             {
                 var kmList = _quanlykm.GetAll();
-                var row = dataGridView1.CurrentCell.RowIndex;
+                var row = dtgv.CurrentCell.RowIndex;
                 if (row >= 0 && row < kmList.Count)
                 {
                     var km = kmList[row];
@@ -136,11 +194,11 @@ namespace _3_PL
 
         private void button8_Click(object sender, EventArgs e)
         {
-            textBox1.Text = "";
-            textBox2.Text = "";
-            textBox5.Text = "";
-            dateTimePicker1.Value = DateTime.Now;
-            dateTimePicker2.Value = DateTime.Now;
+            tbidKM.Text = "";
+            tbTenKM.Text = "";
+            tbptKM.Text = "";
+            dtngaybatdau.Value = DateTime.Now;
+            dtngaykethuc.Value = DateTime.Now;
 
         }
 
@@ -163,15 +221,15 @@ namespace _3_PL
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DateTime fromDate = dateTimePicker1.Value;
-            DateTime toDate = dateTimePicker2.Value;
+            DateTime fromDate = dtngaybatdau.Value;
+            DateTime toDate = dtngaykethuc.Value;
             List<Promotion> result = _quanlykm.GetAll().Where(km => km.CreateDate >= fromDate && km.EndDate <= toDate).ToList();
-            dataGridView1.DataSource = result;
+            dtgv.DataSource = result;
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            DateTime dateTime = dateTimePicker1.Value;
+            DateTime dateTime = dtngaybatdau.Value;
             string formattedDate = dateTime.ToString("dd/MM/yyyy");
             Console.WriteLine(formattedDate); // Kết quả: "09/04/2023"
 
@@ -182,61 +240,6 @@ namespace _3_PL
             load();
         }
         //
-        private void ExportToExcel()
-        {
-            // Tạo workbook mới
-            XSSFWorkbook workbook = new XSSFWorkbook();
-            // Tạo sheet mới
-            ISheet sheet = workbook.CreateSheet("Sheet1");
-
-            // Tạo header cho sheet
-            IRow headerRow = sheet.CreateRow(0);
-            for (int j = 0; j < dataGridView1.Columns.Count; j++)
-            {
-                headerRow.CreateCell(j).SetCellValue(dataGridView1.Columns[j].HeaderText);
-            }
-
-            // Lấy dữ liệu từ DataGridView và đưa vào DataTable
-            DataTable dt = new DataTable();
-            for (int i = 0; i < dataGridView1.Columns.Count; i++)
-            {
-                dt.Columns.Add(dataGridView1.Columns[i].Name);
-            }
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                DataRow dRow = dt.NewRow();
-                for (int i = 0; i < dataGridView1.Columns.Count; i++)
-                {
-                    dRow[i] = row.Cells[i].Value;
-                }
-                dt.Rows.Add(dRow);
-            }
-
-            // Lấy số cột và số dòng của DataTable
-            int rowCount = dt.Rows.Count;
-            int colCount = dt.Columns.Count;
-
-            // Lấy dữ liệu từ DataTable và đưa vào sheet
-            for (int i = 0; i < rowCount; i++)
-            {
-                IRow dataRow = sheet.CreateRow(i + 1);
-                for (int j = 0; j < colCount; j++)
-                {
-                    dataRow.CreateCell(j).SetCellValue(dt.Rows[i][j].ToString());
-                }
-            }
-
-            // Lưu file Excel
-            string fileName = "TTkhuyenmai_" + DateTime.Now.ToString("dd-MM-yyyy_hhmmss") + ".xlsx";
-            string filePath = "D:\\" + fileName;
-            using (FileStream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-            {
-                workbook.Write(stream);
-            }
-
-            // Hiển thị thông báo xuất file thành công
-            MessageBox.Show("Xuất file thành công!", "Thông báo");
-        }
         private void ExportToExcel2()
         {
             // Tạo workbook mới
@@ -246,21 +249,21 @@ namespace _3_PL
 
             // Tạo header cho sheet
             IRow headerRow = sheet.CreateRow(0);
-            for (int j = 0; j < dataGridView1.Columns.Count; j++)
+            for (int j = 0; j < dtgv.Columns.Count; j++)
             {
-                headerRow.CreateCell(j).SetCellValue(dataGridView1.Columns[j].HeaderText);
+                headerRow.CreateCell(j).SetCellValue(dtgv.Columns[j].HeaderText);
             }
 
             // Lấy dữ liệu từ DataGridView và đưa vào DataTable
             DataTable dt = new DataTable();
-            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            for (int i = 0; i < dtgv.Columns.Count; i++)
             {
-                dt.Columns.Add(dataGridView1.Columns[i].Name);
+                dt.Columns.Add(dtgv.Columns[i].Name);
             }
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+            foreach (DataGridViewRow row in dtgv.Rows)
             {
                 DataRow dRow = dt.NewRow();
-                for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                for (int i = 0; i < dtgv.Columns.Count; i++)
                 {
                     dRow[i] = row.Cells[i].Value;
                 }
@@ -308,6 +311,11 @@ namespace _3_PL
         private void button4_Click_1(object sender, EventArgs e)
         {
             load();
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
