@@ -30,8 +30,11 @@ namespace _3_PL
         }
      public void load()
         {
-            _quanlykm.GetAll();
             dtgv.DataSource = _quanlykm.GetAll();
+            ////dtgv.Columns["STT"].Width = 50;
+            //dtgv.Columns["ID"].Width = 50;
+            dtgv.Columns["ID"].Width = 50;
+
         }
 
         private void frmQUANLYKM_Load(object sender, EventArgs e)
@@ -66,19 +69,19 @@ namespace _3_PL
                 km.Name = tbTenKM.Text;
             }
 
-            if (dtngaybatdau.Value >= dtngaykethuc.Value)
+            if (dtngaybatdaua.Value >= dtngaybatdauv.Value)
             {
                 MessageBox.Show("Ngày bắt đầu phải trước ngày kết thúc, xin hãy chọn lại");
-                dtngaybatdau.BackColor = Color.Red;
-                dtngaykethuc.BackColor = Color.Red;
+                dtngaybatdaua.BackColor = Color.Red;
+                dtngaybatdauv.BackColor = Color.Red;
                 return;
             }
             else
             {
-                dtngaybatdau.BackColor = Color.White;
-                dtngaykethuc.BackColor = Color.White;
-                km.CreateDate = dtngaybatdau.Value;
-                km.EndDate = dtngaykethuc.Value;
+                dtngaybatdaua.BackColor = Color.White;
+                dtngaybatdauv.BackColor = Color.White;
+                km.CreateDate = dtngaybatdaua.Value;
+                km.EndDate = dtngaybatdauv.Value;
             }
 
             if (string.IsNullOrWhiteSpace(tbptKM.Text))
@@ -116,11 +119,11 @@ namespace _3_PL
                 if (row >= 0 && row < kmList.Count)
                 {
                     var km = kmList[row];
-                    tbidKM.Text = km.Id.ToString();
+                    //tbidKM.Text = km.Id.ToString();
                     tbTenKM.Text = km.Name.ToString();
                     tbptKM.Text = km.Index.ToString();
-                    dtngaybatdau.Value = km.CreateDate;
-                    dtngaykethuc.Value = km.EndDate;
+                    dtngaybatdaua.Value = km.CreateDate;
+                    dtngaybatdauv.Value = km.EndDate;
                 }
                 else
                 {
@@ -144,7 +147,7 @@ namespace _3_PL
                     {
                         MessageBox.Show("Vui lòng nhập tên khuyến mãi!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    else if (dtngaybatdau.Value >= dtngaykethuc.Value)
+                    else if (dtngaybatdaua.Value >= dtngaybatdauv.Value)
                     {
                         MessageBox.Show("Ngày bắt đầu không được lớn hơn hoặc bằng ngày kết thúc!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -155,8 +158,8 @@ namespace _3_PL
                     else
                     {
                         km.Name = tbTenKM.Text;
-                        km.CreateDate = dtngaybatdau.Value;
-                        km.EndDate = dtngaykethuc.Value;
+                        km.CreateDate = dtngaybatdaua.Value;
+                        km.EndDate = dtngaybatdauv.Value;
                         km.Index = index;
                         _quanlykm.Update(km);
                         MessageBox.Show("Cập nhật thông tin khuyến mãi thành công!");
@@ -194,11 +197,11 @@ namespace _3_PL
 
         private void button8_Click(object sender, EventArgs e)
         {
-            tbidKM.Text = "";
+            //tbidKM.Text = "";
             tbTenKM.Text = "";
             tbptKM.Text = "";
-            dtngaybatdau.Value = DateTime.Now;
-            dtngaykethuc.Value = DateTime.Now;
+            dtngaybatdaua.Value = DateTime.Now;
+            dtngaybatdauv.Value = DateTime.Now;
 
         }
 
@@ -221,15 +224,15 @@ namespace _3_PL
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DateTime fromDate = dtngaybatdau.Value;
-            DateTime toDate = dtngaykethuc.Value;
+            DateTime fromDate = dtngaybatdaua.Value;
+            DateTime toDate = dtngaybatdauv.Value;
             List<Promotion> result = _quanlykm.GetAll().Where(km => km.CreateDate >= fromDate && km.EndDate <= toDate).ToList();
             dtgv.DataSource = result;
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            DateTime dateTime = dtngaybatdau.Value;
+            DateTime dateTime = dtngaybatdaua.Value;
             string formattedDate = dateTime.ToString("dd/MM/yyyy");
             Console.WriteLine(formattedDate); // Kết quả: "09/04/2023"
 
@@ -316,6 +319,16 @@ namespace _3_PL
         private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void dtgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //this.dtgv.Rows[e.RowIndex].Cells["STT"].Value = (e.RowIndex + 1).ToString();
+        }
+
+        private void dtgv_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            this.dtgv.Rows[e.RowIndex].Cells["STT"].Value = (e.RowIndex + 1).ToString();
         }
     }
 }
